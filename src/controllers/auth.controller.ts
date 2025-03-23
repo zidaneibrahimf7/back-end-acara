@@ -65,6 +65,12 @@ export default {
      },
 
      async login(req: Request, res: Response) {
+          /** 
+           #swagger.requestBody = {
+               required: true,
+               schema: {$ref: "#/components/schemas/LoginRequest"}
+           }
+           */
           const {identifier, password} = req.body as unknown as TLogin
           try {
                // Ambil data user berdasarkan "identifier" -> email dan username (jadi akibatnya bisa menuliskan email atau usernamenya)
@@ -115,10 +121,14 @@ export default {
      },
 
      async me(req: IReqUser, res: Response){
+           /**
+            #swagger.security = [{
+               "bearerAuth": []
+            }]
+            */
           try {
                const user = req.user;
                const result = await UserModel.findById(user?.id)
-               console.log(user, result, ':s')
 
                res.status(200).json({
                     message: "Success get user",
