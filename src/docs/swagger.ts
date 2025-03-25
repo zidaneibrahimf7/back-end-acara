@@ -28,6 +28,16 @@ const doc = {
                LoginRequest: {
                     identifier: "zidaneibrhmfdl7",
                     password: "Ibrhmfdl_1"
+               },
+               RegisterRequest: {
+                    fullName: "Zidane Ibrahim Fadela",
+                    username: "zidaneibrhmfdl7",
+                    email: "zidaneibrhmfdl7@gmail.com",
+                    password: "Ibrhmfdl_1",
+                    confirmPassword: "Ibrhmfdl_1"
+               },
+               ActivationRequest: {
+                    code: "abcdefg"
                }
           },
      }
