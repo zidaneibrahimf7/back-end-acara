@@ -17,8 +17,8 @@ async function init(){
 
           app.use(cors())
           app.use(bodyParser.json())
-          app.use(express.json())
-          app.use(express.urlencoded({ extended: true }));
+          // app.use(express.json())
+          // app.use(express.urlencoded({ extended: true }));
 
           app.get('/', (req, res) => {
                res.status(200).json({

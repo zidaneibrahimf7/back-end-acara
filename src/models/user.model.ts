@@ -3,6 +3,7 @@ import { encrypt } from "../utils/encryption";
 
 import {renderMailHTML, sendMail} from '../utils/mail/mail'
 import { CLIENT_HOST, EMAIL_SMTP_USER } from "../utils/env";
+import { ROLES } from "../utils/constant";
 export interface User {
      fullName: string;
      username: string;
@@ -36,15 +37,16 @@ const UserSchema = new Schema<User>({
      },
      role: {
           type: Schema.Types.String,
-          enum: ["admin", "user"],
-          default: 'user'
+          enum: [ROLES.ADMIN, ROLES.MEMBER],
+          default: ROLES.MEMBER
      },
      profilePicture: {
           type: Schema.Types.String,
           default: "user.jpg"
      },
      isActive: {
-          type: Schema.Types.Boolean
+          type: Schema.Types.Boolean,
+          default: false,
      },
      activationCode: {
           type: Schema.Types.String,
