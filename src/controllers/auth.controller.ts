@@ -5,6 +5,7 @@ import UserModel from "../models/user.model"
 import { encrypt } from "../utils/encryption";
 import { generateToken } from "../utils/jwt";
 import { IReqUser } from "../utils/interfaces";
+import response from "../utils/response";
 
 
 type TRegister = {
@@ -67,18 +68,20 @@ export default {
                     password
                })
 
-               res.status(201).json({
-                    code: 0,
-                    message: "Success Registration",
-                    data: result
-               })
+               response.success(res, result, "Success Registration")
+               // res.status(201).json({
+               //      code: 0,
+               //      message: "Success Registration",
+               //      data: result
+               // })
 
           } catch (error) {
                const err = error as unknown as Error
-               res.status(500).json({
-                    message: err.message,
-                    data: null
-               })
+               response.error(res, error, 'Failed registration')
+               // res.status(500).json({
+               //      message: err.message,
+               //      data: null
+               // })
           }
      },
 
@@ -102,20 +105,14 @@ export default {
                     })
 
                if(!userByIdentifier){
-                    return res.status(403).json({
-                         message: 'user not found',
-                         data: null
-                    })
+                   return response.unauthorized(res, 'User not found')
                }
 
                // validasi password
                const validatePassword: boolean = encrypt(password) === userByIdentifier.password
 
                if(!validatePassword) {
-                     return res.status(403).json({
-                         message: 'user not found',
-                         data: null
-                    })
+                    return response.unauthorized(res, 'User not found')
                }
 
                // Generate Token JWT
@@ -124,19 +121,17 @@ export default {
                     role: userByIdentifier.role
                })
 
-               return res.status(200).json({
-                    code: 0,
-                    message: "Login Successful",
-                    data: token
-               })
+               return response.success(res, token, 'Login successfull')
+               // return res.status(200).json({
+               //      code: 0,
+               //      message: "Login Successful",
+               //      data: token
+               // })
 
 
           } catch (error) {
                const err = error as unknown as Error
-               res.status(500).json({
-                    message: err.message,
-                    data: null
-               })
+               response.error(res, error, err.message)
           }
      },
 
@@ -151,16 +146,11 @@ export default {
                const user = req.user;
                const result = await UserModel.findById(user?.id)
 
-               res.status(200).json({
-                    message: "Success get user",
-                    data: result
-               })
+               return response.success(res, result, 'Success get user')
+
           } catch (error) {
                const err = error as unknown as Error
-               res.status(400).json({
-                    message: err.message,
-                    data: null
-               })
+               response.error(res, error, err.message)
           }
      },
 
@@ -176,21 +166,16 @@ export default {
                const { code } = req.body as { code: string }
 
                const user = await UserModel.findOneAndUpdate(
-                    {activationCode: code},
-                    {isActive: true},
-                    {new: true}
+                    { activationCode: code },
+                    { isActive: true },
+                    { new: true }
                )
 
-               res.status(200).json({
-                    message: "User Successfully Activated",
-                    data: user
-               })
+               return response.success(res, user, 'User successfully activated')
+
           } catch (error){
                const err = error as unknown as Error
-               res.status(400).json({
-                    message: err.message,
-                    data: null
-               })
+               response.error(res, error, err.message)
           }
      }
 }

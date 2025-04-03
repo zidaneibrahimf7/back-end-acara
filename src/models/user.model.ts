@@ -4,17 +4,7 @@ import { encrypt } from "../utils/encryption";
 import {renderMailHTML, sendMail} from '../utils/mail/mail'
 import { CLIENT_HOST, EMAIL_SMTP_USER } from "../utils/env";
 import { ROLES } from "../utils/constant";
-export interface User {
-     fullName: string;
-     username: string;
-     email: string;
-     password: string;
-     role: string;
-     profilePicture: string;
-     isActive: boolean;
-     activationCode: string;
-     createdAt?: string
-}
+import { User } from "../utils/interfaces";
 
 const Schema = mongoose.Schema
 

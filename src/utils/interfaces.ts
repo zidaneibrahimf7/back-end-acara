@@ -1,6 +1,18 @@
 import { Types } from "mongoose"
-import { User } from "../models/user.model"
 import { Request } from "express"
+
+export interface User {
+     fullName: string;
+     username: string;
+     email: string;
+     password: string;
+     role: string;
+     profilePicture: string;
+     isActive: boolean;
+     activationCode: string;
+     createdAt?: string
+}
+
 
 export interface IUserToken extends Omit<
      User, 
@@ -18,4 +30,10 @@ export interface IUserToken extends Omit<
 
 export interface IReqUser extends Request{
      user?: IUserToken
+}
+
+export interface IPaginationQuery {
+     page: number,
+     limit: number,
+     search?: string
 }
