@@ -58,7 +58,7 @@ router.get(
           })
 })
 
-router.post("/createCategory", [authMiddleware, aclMiddleware([ROLES.ADMIN])], categoryController.create, 
+router.post("/category/createCategory", [authMiddleware, aclMiddleware([ROLES.ADMIN])], categoryController.create, 
      /* 
           #swagger.tags = ['Category']
           #swagger.security = [{
@@ -199,7 +199,7 @@ router.get("/regions-search", regionController.findByCity,
      */
 )
 
-router.post("/createEvent", [authMiddleware, aclMiddleware([ROLES.ADMIN])], eventController.create, 
+router.post("/events/createEvent", [authMiddleware, aclMiddleware([ROLES.ADMIN])], eventController.create, 
      /* 
           #swagger.tags = ['Events']
           #swagger.security = [{
