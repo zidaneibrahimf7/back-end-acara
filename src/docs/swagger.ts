@@ -58,7 +58,9 @@ const doc = {
                     isOnline: false,
                     isFeatured: true
                },
-               RemoveMedia: {}
+               RemoveMedia: {
+                    fileUrl: ""
+               }
 
           },
      }

@@ -128,7 +128,7 @@
         }
       }
     },
-    "/createCategory": {
+    "/category/createCategory": {
       "post": {
         "tags": [
           "Category"
@@ -515,7 +515,7 @@
         }
       }
     },
-    "/createEvent": {
+    "/events/createEvent": {
       "post": {
         "tags": [
           "Events"
@@ -843,7 +843,12 @@
       },
       "RemoveMedia": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "fileUrl": {
+            "type": "string",
+            "example": ""
+          }
+        },
         "xml": {
           "name": "RemoveMedia"
         }
