@@ -26,8 +26,8 @@ const doc = {
           },
           schemas: {
                LoginRequest: {
-                    identifier: "zidaneibrhmfdl7",
-                    password: "Ibrhmfdl_1"
+                    identifier: "admin",
+                    password: "Admin123"
                },
                RegisterRequest: {
                     fullName: "Zidane Ibrahim Fadela",
@@ -53,10 +53,12 @@ const doc = {
                     endDate: "2024-12-16 12:45:00",
                     location: {
                          region: 3213180003,
-                         coordinates: [6.6, 10.10]
+                         coordinates: [6.6, 10.10],
+                         address: ""
                     },
                     isOnline: false,
-                    isFeatured: true
+                    isFeatured: true,
+                    isPublish: false
                },
                RemoveMedia: {
                     fileUrl: ""

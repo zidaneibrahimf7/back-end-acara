@@ -711,11 +711,11 @@
         "properties": {
           "identifier": {
             "type": "string",
-            "example": "zidaneibrhmfdl7"
+            "example": "admin"
           },
           "password": {
             "type": "string",
-            "example": "Ibrhmfdl_1"
+            "example": "Admin123"
           }
         },
         "xml": {
@@ -825,6 +825,10 @@
                 "items": {
                   "type": "number"
                 }
+              },
+              "address": {
+                "type": "string",
+                "example": ""
               }
             }
           },
@@ -835,6 +839,10 @@
           "isFeatured": {
             "type": "boolean",
             "example": true
+          },
+          "isPublish": {
+            "type": "boolean",
+            "example": false
           }
         },
         "xml": {
