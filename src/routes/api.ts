@@ -9,6 +9,7 @@ import categoryController from '../controllers/category.controller';
 import regionController from '../controllers/region.controller';
 import eventController from '../controllers/event.controller';
 import ticketController from '../controllers/ticket.controller';
+import bannerController from '../controllers/banner.controller';
 
 const router = express.Router()
 
@@ -258,5 +259,11 @@ router.get("/tickets/:id", ticketController.findOne);
 router.put("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ticketController.update);
 router.delete("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ticketController.remove);
 router.get("/tickets/:eventId/events", ticketController.findAllByEvent);
+
+router.post("/banner/createBanner", [authMiddleware, aclMiddleware([ROLES.ADMIN])], bannerController.create);
+router.get("/banner", bannerController.findAll);
+router.get("/banner/:id", bannerController.findOne);
+router.put("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], bannerController.update);
+router.delete("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], bannerController.remove);
 
 export default router
