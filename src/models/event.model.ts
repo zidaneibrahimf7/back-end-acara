@@ -1,8 +1,11 @@
 import mongoose, { ObjectId } from "mongoose";
 import * as Yup from 'yup'
-
+import { USER_MODEL_NAME } from "./user.model";
+import { CATEGORY_MODEL_NAME } from "./category.model";
 
 const Schema = mongoose.Schema
+
+export const EVENT_MODEL_NAME = 'Event'
 
 export const eventDAO = Yup.object({
      name: Yup.string().required(),
@@ -51,7 +54,7 @@ const EventSchema = new Schema<Event>({
      category: {
           type: Schema.Types.ObjectId,
           required: true,
-          ref: "Category"
+          ref: CATEGORY_MODEL_NAME
      },
      isFeatured: {
           type: Schema.Types.Boolean,
@@ -72,7 +75,7 @@ const EventSchema = new Schema<Event>({
      createdBy: {
           type: Schema.Types.ObjectId,
           required: true,
-          ref: "User"
+          ref: USER_MODEL_NAME
      },
      slug: {
           type: Schema.Types.String,
@@ -103,6 +106,6 @@ EventSchema.pre("save", function(){
      }
 })
 
-const EventModel = mongoose.model("Event", EventSchema)
+const EventModel = mongoose.model(EVENT_MODEL_NAME, EventSchema)
 
 export default EventModel

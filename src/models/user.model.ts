@@ -8,6 +8,8 @@ import { User } from "../utils/interfaces";
 
 const Schema = mongoose.Schema
 
+export const USER_MODEL_NAME = "User"
+
 const UserSchema = new Schema<User>({
      fullName: {
           type: Schema.Types.String,
@@ -85,6 +87,6 @@ UserSchema.methods.toJSON = function () {
      return user
 }
 
-const UserModel = mongoose.model("User", UserSchema)
+const UserModel = mongoose.model(USER_MODEL_NAME, UserSchema)
 
 export default UserModel
