@@ -32,6 +32,10 @@ const ticketSchema = new Schema<Ticket>({
           required: true,
           ref: EVENT_MODEL_NAME
      },
+     description: {
+          type: Schema.Types.String,
+          required: true
+     },
      quantity: {
           type: Schema.Types.Number,
           required: true
