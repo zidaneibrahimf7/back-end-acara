@@ -47,7 +47,7 @@ const doc = {
                CreateEventRequest: {
                     name: "Acara - 1 - name",
                     banner: "https://res.cloudinary.com/dnmhujrwe/image/upload/v1743737059/o0qmwyqcl0itufx4ekqg.jpg",
-                    category: "67ef52cf63f45b26e5743b95",
+                    category: "category_id",
                     description: "Acara - description",
                     startDate: "2024-12-16 10:45:00",
                     endDate: "2024-12-16 12:45:00",
@@ -62,6 +62,18 @@ const doc = {
                },
                RemoveMedia: {
                     fileUrl: ""
+               },
+               CreateTicketRequest: {
+                    price: 50000,
+                    name: "Ticket VIP - name",
+                    description: "Ticket Description",
+                    events: "event_Id",
+                    quantity: 20
+               },
+               CreateBannerRequest : {
+                    title: "",
+                    image: "",
+                    isShow: true
                }
 
           },
