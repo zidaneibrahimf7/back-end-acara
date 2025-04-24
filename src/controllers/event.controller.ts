@@ -1,14 +1,14 @@
 import { Response } from "express"
 import { IPaginationQuery, IReqUser } from "../utils/interfaces"
 import response from "../utils/response"
-import EventModel, { eventDAO, TEvent } from "../models/event.model"
+import EventModel, { eventDAO, TypeEvent } from "../models/event.model"
 import { FilterQuery } from "mongoose"
 
 
 export default {
      async create(req: IReqUser, res: Response){
           try  {
-               const payload = {...req.body, createdBy: req.user?.id} as TEvent
+               const payload = {...req.body, createdBy: req.user?.id} as TypeEvent
                await eventDAO.validate(payload)
                const result = await EventModel.create(payload)
                response.success(res, result, "Success create an event")
@@ -18,8 +18,26 @@ export default {
      },
      async findAll(req: IReqUser, res: Response){
           try  {
-               const {limit = 10, page = 1, search} = req.query as unknown as IPaginationQuery
-               const query: FilterQuery<TEvent> = {}
+
+               const buildQuery = (filter: any) => {
+                    let query: FilterQuery<TypeEvent> = {}
+                    if(filter.search) query.$text = { $search: filter.search }
+                    if(filter.category) query.category = filter.category
+                    if(filter.isOnline) query.isOnline = filter.isOnline
+                    if(filter.isPublish) query.isPublish = filter.isPublish
+                    if(filter.isFeatured) query.isFeatured = filter.isFeatured
+                    return query
+               }
+
+               const {limit = 10, page = 1, search, category, isOnline, isFeatured, isPublish} = req.query
+
+               const query = buildQuery({
+                    search,
+                    category,
+                    isOnline,
+                    isFeatured,
+                    isPublish
+               })
 
                if(search) {
                     Object.assign(query, {
@@ -31,8 +49,8 @@ export default {
                }
 
                const result = await EventModel.find(query)
-                              .limit(limit)
-                              .skip((page - 1) * limit)
+                              .limit(+limit)
+                              .skip((+page - 1) * +limit)
                               .sort({createdAt: -1})
                               .exec()
 
@@ -42,9 +60,9 @@ export default {
                     res,
                     result,
                     {
-                         current: page,
+                         current: +page,
                          total: count,
-                         totalPages: Math.ceil(count / limit)
+                         totalPages: Math.ceil(count / +limit)
                     },
                     "Success get all events"
                )

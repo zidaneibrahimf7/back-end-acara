@@ -10,6 +10,7 @@ import regionController from '../controllers/region.controller';
 import eventController from '../controllers/event.controller';
 import ticketController from '../controllers/ticket.controller';
 import bannerController from '../controllers/banner.controller';
+import orderController from '../controllers/order.controller';
 
 const router = express.Router()
 
@@ -373,6 +374,43 @@ router.delete("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ban
           #swagger.security = [{
                "bearerAuth": {}
           }]
+     */
+);
+
+
+
+router.post("/orders/createOrder", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.create, 
+     /* 
+          #swagger.tags = ['Orders']
+          #swagger.security = [{
+               "bearerAuth": {}
+          }]
+          #swagger.requestBody = {
+               required: true,
+               schema: {
+                    $ref: "#/components/schemas/CreateOrderRequest"
+               }
+          }
+     */
+);
+router.get("/orders", orderController.findAll,
+     /*
+     #swagger.tags = ['Orders']
+     #swagger.parameters['limit'] = {
+          in: 'query',
+          type: 'number',
+          default: 10
+     }
+     #swagger.parameters['page'] = {
+          in: 'query',
+          type: 'number',
+          default: 1
+     }
+     */
+);
+router.get("/orders/:id", orderController.findOne,
+     /* 
+          #swagger.tags = ['Orders']
      */
 );
 
