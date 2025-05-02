@@ -380,37 +380,33 @@ router.delete("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ban
 
 
 router.post("/orders/createOrder", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.create, 
-     /* 
-          #swagger.tags = ['Orders']
+       /*
+          #swagger.tags = ['Order']
           #swagger.security = [{
-               "bearerAuth": {}
+          "bearerAuth": ""
           }]
           #swagger.requestBody = {
-               required: true,
-               schema: {
-                    $ref: "#/components/schemas/CreateOrderRequest"
-               }
+          required: true,
+          schema: {
+               $ref: "#/components/schemas/CreateOrderRequest"
+          }
           }
      */
 );
-router.get("/orders", orderController.findAll,
+router.get("/orders", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.findAll,
      /*
-     #swagger.tags = ['Orders']
-     #swagger.parameters['limit'] = {
-          in: 'query',
-          type: 'number',
-          default: 10
-     }
-     #swagger.parameters['page'] = {
-          in: 'query',
-          type: 'number',
-          default: 1
-     }
+          #swagger.tags = ['Order']
+          #swagger.security = [{
+               "bearerAuth": ""
+          }]
      */
 );
-router.get("/orders/:id", orderController.findOne,
-     /* 
-          #swagger.tags = ['Orders']
+router.get("/orders/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.findOne,
+    /*
+          #swagger.tags = ['Order']
+          #swagger.security = [{
+               "bearerAuth": ""
+          }]
      */
 );
 
