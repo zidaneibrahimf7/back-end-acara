@@ -45,7 +45,6 @@ export interface Order extends Omit<TypeOrder, "createdBy" | "events" | "ticket"
 const OrderSchema = new Schema<Order>({
      orderId: {
           type: Schema.Types.String,
-          required: true
      },
      createdBy: {
           type: Schema.Types.ObjectId,
