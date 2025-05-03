@@ -82,8 +82,10 @@ export default {
      },
      async findOne(req: IReqUser, res: Response){
           try {
-               const {orderId} = req.params
-               const result = await OrderModel.findById(orderId)
+               const { orderId } = req.params
+               const result = await OrderModel.findOne({
+                    orderId
+               })
 
                if(!result) return response.notFound(res, "order not found")
 
@@ -94,13 +96,21 @@ export default {
      },
      async update(req: IReqUser, res: Response){
           try {
-
+               
           } catch (error){
                response.error(res, error, 'Failed to update an order')
           }
      },
      async remove(req: IReqUser, res: Response){
           try {
+               const { orderId } = req.params
+               const result = await OrderModel.findOneAndDelete({
+                    orderId
+               }, { new: true })
+
+               if(!result) return response.notFound(res, "order not found")
+
+               return response.success(res, result, "Success to remove an order")
 
           } catch (error){
                response.error(res, error, 'Failed to remove an order')

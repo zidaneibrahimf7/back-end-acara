@@ -383,13 +383,13 @@ router.post("/orders/createOrder", [authMiddleware, aclMiddleware([ROLES.ADMIN])
        /*
           #swagger.tags = ['Order']
           #swagger.security = [{
-          "bearerAuth": ""
+               "bearerAuth": ""
           }]
           #swagger.requestBody = {
-          required: true,
-          schema: {
-               $ref: "#/components/schemas/CreateOrderRequest"
-          }
+               required: true,
+               schema: {
+                    $ref: "#/components/schemas/CreateOrderRequest"
+               }
           }
      */
 );
@@ -401,7 +401,7 @@ router.get("/orders", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderContr
           }]
      */
 );
-router.get("/orders/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.findOne,
+router.get("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.findOne,
     /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -409,5 +409,14 @@ router.get("/orders/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEM
           }]
      */
 );
+
+router.delete("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.remove, 
+     /*
+          #swagger.tags = ['Order']
+          #swagger.security = [{
+               "bearerAuth": ""
+          }]
+     */
+)
 
 export default router
