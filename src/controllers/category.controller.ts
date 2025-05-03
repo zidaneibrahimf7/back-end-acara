@@ -1,12 +1,12 @@
 import { Response } from "express"
 import { IPaginationQuery, IReqUser } from "../utils/interfaces"
-import categoryModel, { categoryDAO } from "../models/category.model"
+import categoryModel, { categoryDTO } from "../models/category.model"
 import response from "../utils/response"
 
 export default {
      async create(req: IReqUser, res: Response){
           try {
-               await categoryDAO.validate(req.body)
+               await categoryDTO.validate(req.body)
                const result = await categoryModel.create(req.body)
 
                response.success(res, result, 'Success create category')

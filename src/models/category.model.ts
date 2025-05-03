@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import * as Yup from 'yup';
 
-export const categoryDAO = Yup.object({
+export const categoryDTO = Yup.object({
      name: Yup.string().required(),
      description: Yup.string().required(),
      icon: Yup.string().required()
@@ -9,7 +9,7 @@ export const categoryDAO = Yup.object({
 
 export const CATEGORY_MODEL_NAME = "Category"
 
-export type Category = Yup.InferType<typeof categoryDAO>
+export type Category = Yup.InferType<typeof categoryDTO>
 
 const CategorySchema = new Schema<Category>({
      name: {

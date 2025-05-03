@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
-import OrderModel, { orderDAO, OrderStatus, TypeOrder, TypeVoucher } from "../models/order.model";
+import OrderModel, { orderDTO, OrderStatus, TypeOrder, TypeVoucher } from "../models/order.model";
 import TicketModel from "../models/ticket.model";
 import { FilterQuery } from "mongoose";
 import { getId } from "../utils/id";
@@ -11,7 +11,7 @@ export default {
           try {
                const userId = req.user?.id
                const payload = { ...req.body, createdBy: userId } as TypeOrder
-               await orderDAO.validate(payload)
+               await orderDTO.validate(payload)
 
                const ticket = await TicketModel.findById(payload.ticket)
 
@@ -34,7 +34,6 @@ export default {
      },
      async findAll(req: IReqUser, res: Response){
           try  {
-
                const buildQuery = (filter: any) => {
                     let query: FilterQuery<TypeOrder> = {}
                     if(filter.search) query.$text = { $search: filter.search }
@@ -116,14 +115,48 @@ export default {
                response.error(res, error, 'Failed to remove an order')
           }
      },
-     async findAllByMember(req: IReqUser, res: Response){
+     async findAllByMember(req: IReqUser, res: Response) {
           try {
+               const userId = req.user?.id;
+               const buildQuery = (filter: any) => {
+                    let query: FilterQuery<TypeOrder> = { createdBy: userId, };
 
-          } catch (error){
-               response.error(res, error, 'Failed to find order by member')
+                    if (filter.search) query.$text = { $search: filter.search };
+                    
+                    return query;
+               };
+
+               const { limit = 10, page = 1, search } = req.query;
+
+               const query = buildQuery({
+                    search,
+               });
+
+               const result = await OrderModel.find(query)
+                                             .limit(+limit)
+                                             .skip((+page - 1) * +limit)
+                                             .sort({ createdAt: -1 })
+                                             .lean()
+                                             .exec();
+
+               const count = await OrderModel.countDocuments(query);
+
+               response.pagination(
+                    res,
+                    result,
+                    {
+                         current: +page,
+                         total: count,
+                         totalPages: Math.ceil(count / +limit),
+                    },
+
+                    "success find all orders"
+               );
+
+          } catch (error) {
+               response.error(res, error, "failed find all orders");
           }
      },
-
      async complete(req: IReqUser, res: Response){
           try {
                const { orderId } = req.params
@@ -166,14 +199,47 @@ export default {
           }
      },
      async pending(req: IReqUser, res: Response){
-           try {
+          try {
+               const { orderId } = req.params
 
+               const order = await OrderModel.findOne({ orderId })
+
+               if(!order) return response.notFound(res, 'order not found')
+
+               if(order.status === OrderStatus.COMPLETED) return response.error(res, null, 'this order have been completed')
+
+               if(order.status === OrderStatus.PENDING) return response.error(res, null, 'this order is currently in payment pending')
+
+               const result = await OrderModel.findOneAndUpdate({
+                    orderId,
+               }, {
+                    status: OrderStatus.PENDING
+               }, {new: true})
+
+               return response.success(res, result, 'success to get pending an order')
           } catch (error){
                response.error(res, error, 'Failed to pending an order')
           }
      },
      async cancel(req: IReqUser, res: Response){
-           try {
+          try {
+               const { orderId } = req.params
+
+               const order = await OrderModel.findOne({ orderId })
+
+               if(!order) return response.notFound(res, 'order not found')
+
+               if(order.status === OrderStatus.COMPLETED) return response.error(res, null, 'this order have been completed')
+
+               if(order.status === OrderStatus.CANCEL) return response.error(res, null, 'this order have been cancelled')
+
+               const result = await OrderModel.findOneAndUpdate({
+                    orderId,
+               }, {
+                    status: OrderStatus.CANCEL
+               }, {new: true})
+
+               return response.success(res, result, 'success to cancelled an order')
 
           } catch (error){
                response.error(res, error, 'Failed to cancel an order')
