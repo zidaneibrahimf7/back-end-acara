@@ -3,6 +3,7 @@ import { IPaginationQuery, IReqUser } from "../utils/interfaces"
 import response from "../utils/response"
 import EventModel, { eventDTO, TypeEvent } from "../models/event.model"
 import { FilterQuery } from "mongoose"
+import uploader from "../utils/uploader"
 
 
 export default {
@@ -11,6 +12,9 @@ export default {
                const payload = {...req.body, createdBy: req.user?.id} as TypeEvent
                await eventDTO.validate(payload)
                const result = await EventModel.create(payload)
+
+               if(!result) return response.notFound(res, 'Event not found')
+
                response.success(res, result, "Success create an event")
           } catch (error){
                response.error(res, error, 'Failed to create an event')
@@ -54,6 +58,8 @@ export default {
                               .sort({createdAt: -1})
                               .exec()
 
+               if(!result) return response.notFound(res, 'Event not found')
+
                const count = await EventModel.countDocuments(query)
 
                response.pagination(
@@ -75,6 +81,9 @@ export default {
           try  {
                const { id } = req.params
                const result = await EventModel.findById(id)
+
+                if(!result) return response.notFound(res, 'Event not found')
+
                response.success(res, result, "Success find one events")
 
           } catch (error){
@@ -88,6 +97,8 @@ export default {
                     new: true
                })
 
+               if(!result) return response.notFound(res, 'Event not found')
+
                response.success(res, result, "Success update an event")
           } catch (error){
                response.error(res, error, 'Failed to update an event')
@@ -96,7 +107,11 @@ export default {
      async remove(req: IReqUser, res: Response){
            try  {
                const { id } = req.params
-               const result = await EventModel.findByIdAndDelete(id)
+               const result = await EventModel.findByIdAndDelete(id, { new: true })
+
+               if(!result) return response.notFound(res, "event not found")
+
+               await uploader.remove(result.banner)
 
                response.success(res, result, 'Success delete an event')
           } catch (error){
