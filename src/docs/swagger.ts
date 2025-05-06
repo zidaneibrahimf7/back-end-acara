@@ -80,7 +80,15 @@ const doc = {
                     ticket: "ticket object id",
                     quantity: 1,
                },
-
+               UpdateProfileRequest: {
+                    fullName: "", 
+                    profilePicture: ""
+               },
+               UpdatePasswordRequest: {
+                    oldPassword: "", 
+                    password: "",
+                    confirmPassword: ""
+               },
           },
      }
 }
