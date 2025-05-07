@@ -85,7 +85,7 @@ router.get(
           })
 })
 
-router.post("/category/createCategory", [authMiddleware, aclMiddleware([ROLES.ADMIN])], categoryController.create, 
+router.post("/category/createCategory", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], categoryController.create, 
      /* 
           #swagger.tags = ['Category']
           #swagger.security = [{
@@ -109,7 +109,7 @@ router.get("/category/:id", categoryController.findOne,
           #swagger.tags = ['Category']
      */
 );
-router.put("/category/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], categoryController.update, 
+router.put("/category/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], categoryController.update, 
      /* 
           #swagger.tags = ['Category']
           #swagger.security = [{
@@ -123,7 +123,7 @@ router.put("/category/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], cate
           }
      */
 );
-router.delete("/category/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], categoryController.remove,
+router.delete("/category/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], categoryController.remove,
      /* 
           #swagger.tags = ['Category']
           #swagger.security = [{
@@ -132,7 +132,7 @@ router.delete("/category/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], c
      */
 );
 
-router.post("/media/upload-single", [ authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER]), mediaMiddleware.single("file")], mediaController.single,
+router.post("/media/upload-single", [ authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN]), mediaMiddleware.single("file")], mediaController.single,
      /*
           #swagger.tags = ['Media']
           #swagger.security = [{
@@ -156,7 +156,7 @@ router.post("/media/upload-single", [ authMiddleware, aclMiddleware([ROLES.ADMIN
           }
      */
 )
-router.post("/media/upload-multiple", [ authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER]), mediaMiddleware.multiple("files")], mediaController.multiple,
+router.post("/media/upload-multiple", [ authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN]), mediaMiddleware.multiple("files")], mediaController.multiple,
      /* 
           #swagger.tags = ['Media']
           #swagger.security = [{
@@ -226,7 +226,7 @@ router.get("/regions-search", regionController.findByCity,
      */
 )
 
-router.post("/events/createEvent", [authMiddleware, aclMiddleware([ROLES.ADMIN])], eventController.create, 
+router.post("/events/createEvent", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], eventController.create, 
      /* 
           #swagger.tags = ['Events']
           #swagger.security = [{
@@ -276,7 +276,7 @@ router.get("/events/:id", eventController.findOne,
           #swagger.tags = ['Events']
      */
 );
-router.put("/events/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], eventController.update, 
+router.put("/events/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], eventController.update, 
      /* 
           #swagger.tags = ['Events']
           #swagger.security = [{
@@ -290,7 +290,7 @@ router.put("/events/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], eventC
           }
      */
 );
-router.delete("/events/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], eventController.remove,
+router.delete("/events/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], eventController.remove,
      /* 
           #swagger.tags = ['Events']
           #swagger.security = [{
@@ -304,7 +304,7 @@ router.get("/events/:slug/slug", eventController.findOneBySlug,
      */
 );
 
-router.post("/tickets/createTicket", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ticketController.create, 
+router.post("/tickets/createTicket", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], ticketController.create, 
      /* 
           #swagger.tags = ['Ticket']
           #swagger.security = [{
@@ -328,7 +328,7 @@ router.get("/tickets/:id", ticketController.findOne,
           #swagger.tags = ['Ticket']
      */
 );
-router.put("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ticketController.update,  
+router.put("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], ticketController.update,  
      /* 
           #swagger.tags = ['Ticket']
           #swagger.security = [{
@@ -342,7 +342,7 @@ router.put("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ticke
           }
      */
     );
-router.delete("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ticketController.remove,  
+router.delete("/tickets/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], ticketController.remove,  
      /* 
           #swagger.tags = ['Ticket']
           #swagger.security = [{
@@ -356,7 +356,7 @@ router.get("/tickets/:eventId/events", ticketController.findAllByEvent,
      */
 );
 
-router.post("/banner/createBanner", [authMiddleware, aclMiddleware([ROLES.ADMIN])], bannerController.create, 
+router.post("/banner/createBanner", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], bannerController.create, 
      /* 
           #swagger.tags = ['Banner']
           #swagger.security = [{
@@ -378,7 +378,7 @@ router.get("/banner/:id", bannerController.findOne,
      /* 
           #swagger.tags = ['Banner']
      */);
-router.put("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], bannerController.update, 
+router.put("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], bannerController.update, 
      /* 
           #swagger.tags = ['Banner']
           #swagger.security = [{
@@ -392,7 +392,7 @@ router.put("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], banner
           }
      */
     );
-router.delete("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], bannerController.remove, 
+router.delete("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.SUPERADMIN])], bannerController.remove, 
      /* 
           #swagger.tags = ['Banner']
           #swagger.security = [{
@@ -402,8 +402,8 @@ router.delete("/banner/:id", [authMiddleware, aclMiddleware([ROLES.ADMIN])], ban
 );
 
 
-
-router.post("/orders/createOrder", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.create, 
+// Create order role admin dihapus
+router.post("/orders/createOrder", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.create, 
        /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -417,7 +417,9 @@ router.post("/orders/createOrder", [authMiddleware, aclMiddleware([ROLES.ADMIN, 
           }
      */
 );
-router.get("/orders", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.findAll,
+
+// Create order role admin dihapus
+router.get("/orders", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.findAll,
      /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -425,7 +427,9 @@ router.get("/orders", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderContr
           }]
      */
 );
-router.get("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.findOne,
+
+// Create order role admin dihapus
+router.get("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.findOne,
     /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -434,7 +438,8 @@ router.get("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLE
      */
 );
 
-router.get("/orders-history", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.findAllByMember,
+// Create order role admin dihapus
+router.get("/orders-history", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.findAllByMember,
     /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -443,7 +448,8 @@ router.get("/orders-history", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES
      */
 );
 
-router.delete("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER])], orderController.remove, 
+// Create order role member dihapus
+router.delete("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.remove, 
      /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -451,7 +457,9 @@ router.delete("/orders/:orderId", [authMiddleware, aclMiddleware([ROLES.ADMIN, R
           }]
      */
 )
-router.put("/orders/:orderId/completed", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.complete
+
+// Create order role member dihapus
+router.put("/orders/:orderId/completed", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.complete
      /*
      #swagger.tags = ['Order']
      #swagger.security = [{
@@ -460,7 +468,8 @@ router.put("/orders/:orderId/completed", [authMiddleware, aclMiddleware([ROLES.A
      */
 );
 
-router.put("/orders/:orderId/pending", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.pending, 
+// Create order role member dihapus
+router.put("/orders/:orderId/pending", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.pending, 
      /*
           #swagger.tags = ['Order']
           #swagger.security = [{
@@ -469,7 +478,8 @@ router.put("/orders/:orderId/pending", [authMiddleware, aclMiddleware([ROLES.ADM
      */
 )
 
-router.put("/orders/:orderId/cancel", [authMiddleware, aclMiddleware([ROLES.ADMIN])], orderController.cancel,
+// Create order role member dihapus
+router.put("/orders/:orderId/cancel", [authMiddleware, aclMiddleware([ROLES.ADMIN, ROLES.MEMBER, ROLES.SUPERADMIN])], orderController.cancel,
      /*
           #swagger.tags = ['Order']
           #swagger.security = [{
